@@ -1,6 +1,7 @@
 package com.vinicius.ecommerce.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.vinicius.ecommerce.entities.enums.PedidoStatus;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -22,11 +23,14 @@ public class Pedido implements Serializable {
     @JoinColumn(name = "Cliente_Id")
     private User cliente;
 
+    private Integer pedidoStatus;
+
     public Pedido() {}
 
-    public Pedido(Long id, Instant data, User cliente) {
+    public Pedido(Long id, Instant data,PedidoStatus pedidoStatus ,User cliente) {
         this.id = id;
         this.data = data;
+        setPedidoStatus(pedidoStatus);
         this.cliente = cliente;
     }
 
@@ -52,6 +56,16 @@ public class Pedido implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public PedidoStatus getPedidoStatus() {
+        return PedidoStatus.valor(pedidoStatus);
+    }
+
+    public void setPedidoStatus(PedidoStatus pedidoStatus) {
+        if (pedidoStatus != null) {
+            this.pedidoStatus = pedidoStatus.getCodigo();
+        }
     }
 
     @Override
