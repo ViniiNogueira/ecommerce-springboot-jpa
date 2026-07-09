@@ -1,0 +1,68 @@
+package com.vinicius.ecommerce.entities;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
+
+import java.io.Serializable;
+import java.time.Instant;
+import java.util.Objects;
+
+@Entity
+@Table(name = "tb_pedido")
+public class Pedido implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    private Long id;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING , pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'" , timezone = "GMT")
+    private Instant data;
+
+    @ManyToOne
+    @JoinColumn(name = "Cliente_Id")
+    private User cliente;
+
+    public Pedido() {}
+
+    public Pedido(Long id, Instant data, User cliente) {
+        this.id = id;
+        this.data = data;
+        this.cliente = cliente;
+    }
+
+    public User getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(User cliente) {
+        this.cliente = cliente;
+    }
+
+    public Instant getData() {
+        return data;
+    }
+
+    public void setData(Instant data) {
+        this.data = data;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Pedido pedido = (Pedido) o;
+        return Objects.equals(getId(), pedido.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
+    }
+}
