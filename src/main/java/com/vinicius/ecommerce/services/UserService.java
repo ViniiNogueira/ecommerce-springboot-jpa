@@ -2,6 +2,7 @@ package com.vinicius.ecommerce.services;
 
 import com.vinicius.ecommerce.entities.User;
 import com.vinicius.ecommerce.repositories.UserRepository;
+import com.vinicius.ecommerce.services.exceptions.RecursoNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,13 +23,12 @@ public class UserService {
 //    findById
     public User findById(Long id) {
         Optional<User> obj = userRepository.findById(id);
-        return obj.get();
+        return obj.orElseThrow(() -> new RecursoNaoEncontradoException(id));
     }
 
     public User insert(User obj) {
         return userRepository.save(obj);
     }
-
 
     public void delete(Long id) {
         userRepository.deleteById(id);
