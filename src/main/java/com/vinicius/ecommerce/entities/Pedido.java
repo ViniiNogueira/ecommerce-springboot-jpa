@@ -31,6 +31,9 @@ public class Pedido implements Serializable {
     @OneToMany(mappedBy = "id.pedido")
     private Set<ItemPedido> itens = new HashSet<>();
 
+    @OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL)
+    private Pagamento pagamento;
+
     public Pedido() {}
 
     public Pedido(Long id, Instant data,PedidoStatus pedidoStatus ,User cliente) {
@@ -66,6 +69,14 @@ public class Pedido implements Serializable {
 
     public PedidoStatus getPedidoStatus() {
         return PedidoStatus.valor(pedidoStatus);
+    }
+
+    public Pagamento getPagamento() {
+        return pagamento;
+    }
+
+    public void setPagamento(Pagamento pagamento) {
+        this.pagamento = pagamento;
     }
 
     public Set<ItemPedido> getItens() {
