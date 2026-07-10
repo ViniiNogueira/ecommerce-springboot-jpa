@@ -1,14 +1,8 @@
 package com.vinicius.ecommerce.config;
 
-import com.vinicius.ecommerce.entities.Categoria;
-import com.vinicius.ecommerce.entities.Pedido;
-import com.vinicius.ecommerce.entities.Produto;
-import com.vinicius.ecommerce.entities.User;
+import com.vinicius.ecommerce.entities.*;
 import com.vinicius.ecommerce.entities.enums.PedidoStatus;
-import com.vinicius.ecommerce.repositories.CategoriaRepository;
-import com.vinicius.ecommerce.repositories.PedidoRepository;
-import com.vinicius.ecommerce.repositories.ProdutoRepository;
-import com.vinicius.ecommerce.repositories.UserRepository;
+import com.vinicius.ecommerce.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -32,6 +26,9 @@ public class TesteConfig implements CommandLineRunner {
 
     @Autowired
     private ProdutoRepository produtoRepository;
+
+    @Autowired
+    private ItemPedidoRepository itemPedidoRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -70,6 +67,13 @@ public class TesteConfig implements CommandLineRunner {
         p5.getCategorias().add(cat2);
 
         produtoRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
+
+        ItemPedido ip1 = new ItemPedido(pe1, p1, 2, p1.getPreco());
+        ItemPedido ip2 = new ItemPedido(pe1, p3, 1, p3.getPreco());
+        ItemPedido ip3 = new ItemPedido(pe2, p3, 2, p3.getPreco());
+        ItemPedido ip4 = new ItemPedido(pe3, p5, 2, p5.getPreco());
+
+        itemPedidoRepository.saveAll(Arrays.asList(ip1,ip2,ip3,ip4));
     }
 
     @Autowired
