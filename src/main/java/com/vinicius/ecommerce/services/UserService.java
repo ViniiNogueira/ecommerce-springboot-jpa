@@ -4,6 +4,7 @@ import com.vinicius.ecommerce.entities.User;
 import com.vinicius.ecommerce.repositories.UserRepository;
 import com.vinicius.ecommerce.services.exceptions.DatabaseException;
 import com.vinicius.ecommerce.services.exceptions.RecursoNaoEncontradoException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -44,9 +45,13 @@ public class UserService {
     }
 
     public User update(Long id, User obj) {
-        User entity = userRepository.getReferenceById(id);
-        updateData(entity, obj);
-        return userRepository.save(entity);
+        try {
+            User entity = userRepository.getReferenceById(id);
+            updateData(entity, obj);
+            return userRepository.save(entity);
+        } catch (EntityNotFoundException e) {
+            throw new RecursoNaoEncontradoException(id);
+        }
     }
 
     private void updateData(User entity, User obj) {
