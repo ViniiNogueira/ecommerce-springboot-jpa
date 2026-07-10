@@ -62,7 +62,10 @@ public class ItemPedido implements Serializable {
         this.quantidade = quantidade;
     }
 
-
+// Sub-Total
+    public Double getSubTotal() {
+        return preco * quantidade;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -75,4 +78,5 @@ public class ItemPedido implements Serializable {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
 }

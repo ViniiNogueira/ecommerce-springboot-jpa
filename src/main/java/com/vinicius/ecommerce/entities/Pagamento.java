@@ -1,5 +1,6 @@
 package com.vinicius.ecommerce.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -16,6 +17,7 @@ public class Pagamento implements Serializable {
     private Long id;
     private Instant momento;
 
+    @JsonIgnore
     @OneToOne
     @MapsId
     private Pedido pedido;
